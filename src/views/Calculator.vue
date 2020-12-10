@@ -10,21 +10,24 @@
                       v-model="calcName"
                       placeholder="Enter Calculation Name"
                    ></b-form-input>
-                   <button type='submit'>შენახვა</button>
-                   <button @click="toggleSave">გაუქმება</button>
+                   <button type='submit'>Save</button>
+                   <button @click="toggleSave">Cancel</button>
                </b-form>
 
               <!--  -->
 
                 <!-- header container -->
              <div class="header" v-if="visible">
-              <h2 class='header-title'> საშემოსავლოს გამოთვლა</h2>
+              <h2 class='header-title'>Income Calculation</h2>
               <div class="header-icons-container">
 
                  <!-- this dropdown showes saved calculations -->
                  <b-dropdown size='sm' variant="link" toggle-class="text-decoration-none" no-caret>
                    <template #button-content>
-                     <b-icon class='header-icons-container-icon' icon="search" scale="2"></b-icon>
+                     <b-icon id='popover-target-2' class='header-icons-container-icon' icon="search" scale="2"></b-icon>
+                       <b-popover target="popover-target-2" triggers="hover" placement="top">
+                         saved calculations
+                    </b-popover>
                    </template>
                    <b-dropdown-item   @click.stop="getStorage(key)" v-for="(key) in localStorageArray" :key="key">
                        <div class="d-flex justify-content-between">
@@ -34,23 +37,36 @@
                 </b-dropdown>
                    <!--  -->
                
-          <b-icon class='header-icons-container-icon' @click="toggleSave" icon="file-earmark-arrow-up" scale="2"></b-icon>
-          <b-icon class='header-icons-container-icon' icon="info-circle-fill" scale="2"></b-icon>
+          <b-icon 
+            id="popover-target-1"
+            class='header-icons-container-icon' 
+            @click="toggleSave" icon="file-earmark-arrow-up" 
+            scale="2">
+           </b-icon>
+           <b-popover target="popover-target-1" triggers="hover" placement="top">
+              save
+          </b-popover>
+
+          <b-icon aria-disabled="true" class='header-icons-container-icon-link' icon="info-circle-fill" scale="2"></b-icon>
 
           <b-icon :class="visible ? null : 'collapsed'"
                   :aria-expanded="visible ? 'true' : 'false'"
                   aria-controls="collapse-4"
                   icon="dash"
                   class='header-icons-container-icon'
+                  id='popover-target-3'
                   @click="visible = !visible">
               </b-icon>
+                 <b-popover target="popover-target-3" triggers="hover" placement="top">
+                   minimize
+                </b-popover>
               </div>
              </div>
 
               <!-- ====== -->
 
              <div v-else class="header-collapse-container">
-                 დ.ღ.გ-ს გამოთვლა
+                  V.A.T calculation
                  <b-icon :class="visible ? null : 'collapsed'"
                     :aria-expanded="visible ? 'true' : 'false'"
                     aria-controls="collapse-4"
@@ -64,39 +80,39 @@
           <div class="calculation-container">
                   <div class="calculation-container-content">
                         <b-form-checkbox v-model="checked" name="check-button" switch>
-                          <b>საპენსიო გადასახადი <span v-if="checked">2%</span> <span v-else>0</span></b>
+                          <b>Pension tax <span v-if="checked">2%</span> <span v-else>0</span></b>
                         </b-form-checkbox>
                         <div class="calculation-container-content-inputs">
-                          <span>დასაბეგრი ხელფასი</span>
-                          <input placeholder="ლ" v-model="salary" v-on:keyup="changeForSalary" :class="[salary.length < 1 ? 'gray' : 'green']"/>
+                          <span>Taxable salary</span>
+                          <input placeholder="Gel" v-model="salary" v-on:keyup="changeForSalary" :class="[salary.length < 1 ? 'gray' : 'green']"/>
                        </div>
                        <div class="calculation-container-content-inputs">
-                          <span>თანამშრომლისთვის გადასახდელი</span>
-                          <input  placeholder="ლ"  v-model="txSalary" v-on:keyup="changeFortxSalary" :class="[txSalary.length < 1 ? 'gray' : 'green']"/>
+                          <span>Employee salary</span>
+                          <input  placeholder="Gel"  v-model="txSalary" v-on:keyup="changeFortxSalary" :class="[txSalary.length < 1 ? 'gray' : 'green']"/>
                      </div>
                       <div class="calculation-container-content-inputs">
-                         <span>ბიუჯეტში გადასარიცხი</span>
+                         <span>Transfer to the budget</span>
                          <span class="unchanged-inputs">
                             {{data.budget}}
-                            <span v-if="salary || txSalary" class="float-right mr-2 mt-1">ლ</span>
+                            <span v-if="salary || txSalary" class="float-right mr-2 mt-1">Gel</span>
                           </span>
                       </div>
                        <div class="calculation-container-content-inputs">
-                           <span>საპენსიო სააგენტოში გადასახდელი</span>
+                           <span>Payable to the Pension Agency</span>
                            <span class="unchanged-inputs">
                              {{data.pensionAgency}}
-                           <span v-if="salary || txSalary" class="float-right mr-2 mt-1">ლ</span>
+                           <span v-if="salary || txSalary" class="float-right mr-2 mt-1">Gel</span>
                            </span>
                        </div>
                        <div class="calculation-container-content-inputs">
-                         <span>სულ ხარჯი</span>
+                         <span>Total</span>
                           <span class="unchanged-inputs">
                             {{data.total}}
-                            <span v-if="salary || txSalary" class="float-right mr-2 mt-1">ლ</span>
+                            <span v-if="salary || txSalary" class="float-right mr-2 mt-1">Gel</span>
                             </span>
                        </div>
                     </div>
-               <button class="remove-button" @click='removeFromInputs'>წაშლა</button>
+               <button class="remove-button" @click='removeFromInputs'>Remove</button>
            </div>
        </b-collapse>
 

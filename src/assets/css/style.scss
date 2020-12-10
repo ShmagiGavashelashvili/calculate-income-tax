@@ -10,7 +10,22 @@
 
 
 ::placeholder {
-  padding-left: 13rem;
+
+     @media(min-width: 320px){
+       padding-left: 9rem;
+     }
+
+     @media(min-width: 360px){
+      padding-left: 11rem;
+    }
+
+    @media(min-width: 1024px){
+       padding-left: 9rem;
+    }
+
+    @media(min-width: 1200px){
+      padding-left: 13rem;
+   }
 }
 
 
@@ -147,6 +162,11 @@
        
         &-icon {
           color: #00d369;
+
+
+           &-link {
+            color: #47d88f;
+           }
 
           @media(min-width: 320px){
             width: 10px;
