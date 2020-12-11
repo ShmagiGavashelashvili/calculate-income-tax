@@ -47,8 +47,6 @@
               save
           </b-popover>
 
-          <b-icon aria-disabled="true" class='header-icons-container-icon-link' icon="info-circle-fill" scale="2"></b-icon>
-
           <b-icon :class="visible ? null : 'collapsed'"
                   :aria-expanded="visible ? 'true' : 'false'"
                   aria-controls="collapse-4"
